@@ -1,0 +1,18 @@
+{
+  "name": "mechta-market/php-http-client",
+  "type": "library",
+  "version": "1.0.0",
+  "autoload": {
+    "psr-4": {
+      "MechtaMarket\\HttpClient\\": "src/"
+    }
+  },
+  "require": {
+    "php": "^8.2",
+    "guzzlehttp/guzzle": "^7.8",
+    "guzzlehttp/uri-template": "^1.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^11.2"
+  }
+}
