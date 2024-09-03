@@ -1,0 +1,23 @@
+name: PhpUnit
+
+on:
+  push:
+
+jobs:
+
+  build-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: php-actions/composer@v6
+
+      - name: Run test suite base
+        run: |
+          ./vendor/bin/phpunit --testdox --display-errors tests > test.log && \
+          cat test.log
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: test-log
+          path: |
+            ./test.log
