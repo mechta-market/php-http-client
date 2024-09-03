@@ -15,9 +15,3 @@ jobs:
         run: |
           ./vendor/bin/phpunit --testdox --display-errors tests > test.log && \
           cat test.log
-
-      - uses: actions/upload-artifact@v3
-        with:
-          name: test-log
-          path: |
-            ./test.log
