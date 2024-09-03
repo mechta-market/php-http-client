@@ -13,6 +13,6 @@
     "guzzlehttp/uri-template": "^1.0"
   },
   "require-dev": {
-    "phpunit/phpunit": "^11.2"
+    "phpunit/phpunit": "^10"
   }
 }
