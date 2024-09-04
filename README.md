@@ -1,4 +1,11 @@
 # Обертка над GuzzleHTTP
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/mechta-market/php-http-client/test.yml)
+![Packagist Downloads](https://img.shields.io/packagist/dt/mechta-market/php-http-client)
+
+## Установка
+```shell
+composer require mechta-market/php-http-client
+```
 
 ## Примеры:
 
