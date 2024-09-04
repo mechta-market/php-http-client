@@ -146,6 +146,35 @@ class HttpClientTest extends PHPUnit\Framework\TestCase
         $this->assertEquals("Test body", $body);
     }
 
+    public function testClientSendObjectAsJson(): void
+    {
+        $requestSubObject = new stdClass();
+        $requestSubObject->subAttrString = 'substr';
+
+        $requestObject = new stdClass();
+        $requestObject->attrString = 'str';
+        $requestObject->attrInt = 123;
+        $requestObject->attrArray = [1,2,3];
+        $requestObject->attrObject = $requestSubObject;
+
+
+        $container = [];
+        $history = Middleware::history($container);
+
+        $this->mockHandler->append($this->getSuccessResponse());
+        $handlerStack = HandlerStack::create($this->mockHandler);
+        $handlerStack->push($history);
+
+        $httpClient = new HttpClient();
+        $httpClient->setHandler($handlerStack);
+
+        $httpClient->post("www.mechta.kz", $requestObject);
+
+        $body = $container[0]['request']->getBody();
+
+        $this->assertEquals(json_encode($requestObject), $body->getContents());
+    }
+
     public function testClientWithJson(): void
     {
         $container = [];

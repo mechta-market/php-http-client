@@ -2,11 +2,10 @@
 
 namespace MechtaMarket\HttpClient;
 
-use Exception;
+use Closure;
 use GuzzleHttp\Client;
 use GuzzleHttp\Cookie\CookieJar;
 use GuzzleHttp\Cookie\SetCookie;
-use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Middleware;
 use GuzzleHttp\Promise\PromiseInterface;
@@ -45,7 +44,7 @@ class HttpClient
 
     protected PromiseInterface $promise;
 
-    protected \MechtaMarket\HttpClient\Request $request;
+    protected Request $request;
 
     protected array $beforeSendingCallbacks = [];
 
@@ -327,28 +326,28 @@ class HttpClient
         ]);
     }
 
-    public function post(string $url, array $data = []): Response
+    public function post(string $url, array|object $data = []): Response
     {
         return $this->send('POST', $url, [
             $this->bodyFormat => $data,
         ]);
     }
 
-    public function patch(string $url, array $data = []): Response
+    public function patch(string $url, array|object $data = []): Response
     {
         return $this->send('PATCH', $url, [
             $this->bodyFormat => $data,
         ]);
     }
 
-    public function put(string $url, $data = []): Response
+    public function put(string $url, array|object $data = []): Response
     {
         return $this->send('PUT', $url, [
             $this->bodyFormat => $data,
         ]);
     }
 
-    public function delete(string $url, $data = []): Response
+    public function delete(string $url, array|object $data = []): Response
     {
         return $this->send('DELETE', $url, empty($data) ? [] : [
             $this->bodyFormat => $data,
@@ -404,7 +403,6 @@ class HttpClient
         foreach($options as $key => $value) {
             $options[$key] = $value;
         }
-
         return $options;
     }
 
@@ -422,7 +420,7 @@ class HttpClient
         $clientMethod = $this->async ? 'requestAsync' : 'request';
 
         $onStats = function ($transferStats) {
-            if (($callback = ($this->options['on_stats'] ?? false)) instanceof \Closure) {
+            if (($callback = ($this->options['on_stats'] ?? false)) instanceof Closure) {
                 $transferStats = $callback($transferStats) ?: $transferStats;
             }
 
